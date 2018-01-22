@@ -7,13 +7,16 @@ $(function() {
       startY,
       x,
       y,
-      borderWidth = 10;
+      borderWidth = 10,
+      isDrawing = false;
 
   $('canvas').mousedown(function(e) {
+    isDrawing = true;
     startX = e.pageX - $(this).offset().left - borderWidth;
     startY = e.pageY - $(this).offset().top - borderWidth;
   })
   .mousemove(function(e) {
+    if (!isDrawing) return;
     x = e.pageX - $(this).offset().left - borderWidth;
     y = e.pageY - $(this).offset().top - borderWidth;
     ctx.beginPath();
@@ -22,5 +25,11 @@ $(function() {
     ctx.stroke();
     startX = x;
     startY = y;
+  })
+  .mouseup(function() {
+    isDrawing = false;
+  })
+  .mouseleave(function() {
+    isDrawing = false;
   });
 });
